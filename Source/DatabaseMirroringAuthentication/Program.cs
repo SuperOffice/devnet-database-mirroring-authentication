@@ -12,6 +12,8 @@ namespace DatabaseMirroringAuthentication
             // generate the applications public and private keys (RSAXML)
 
             var keys = KeyGenerator.Generate();
+            string publicRsaKey = keys.Key;
+            string privateRsaKey = keys.Value;
 
             Console.WriteLine("Public key:");
             Console.WriteLine();
@@ -28,8 +30,8 @@ namespace DatabaseMirroringAuthentication
 
             // pretend to be SuperOffice and generate signed token
 
-            var authenticator = new JwtTokenGenerator();
-            var signedToken = authenticator.CreateSignedSuperIdToken(
+            var tokenGenerator = new JwtTokenGenerator();
+            var signedToken = tokenGenerator.CreateSignedSuperIdToken(
                 "Cust12020", 
                 "123123123123123123", 
                 out nonce);
@@ -52,9 +54,9 @@ namespace DatabaseMirroringAuthentication
 
             // generate simulated application signed token
 
-            string appSignedToken = authenticator.CreateSignedApplicationToken(
+            string appSignedToken = tokenGenerator.CreateSignedApplicationToken(
                 nonce,
-                keys.Value
+                privateRsaKey
                 );
 
 
@@ -65,7 +67,7 @@ namespace DatabaseMirroringAuthentication
             // pretend to be SuperOffice and validate Application signed token
 
             var valid = validator.ValidatePartnerToken(
-                keys.Key,
+                publicRsaKey,
                 appSignedToken,
                 nonce
                 );
