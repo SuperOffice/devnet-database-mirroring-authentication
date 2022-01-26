@@ -6,12 +6,12 @@ Review the code in program.cs file to gain a better understanding of the flow an
 
 There are two types of cryptographic files used in this sample:
 
-1. Self-signed certificate, public-private key pair, used to represent the SuperOffice public and private certificate used to sign and validate requests.
+1. Self-signed certificate, public-private key pair, simulates the SuperOffice public and private certificate used to sign and validate requests.
    1. SuperOfficeCertificates\DevNet.key
    2. SuperOfficeCertificates\DevNet.crt.
-2. RSA XML public-private files that are normally issued by SuperOffice, to the application vendor.
-   1. These used to sign responses with the private key.
-   2. SuperOffice uses the public side to validate application signed responses.
+2. RSA XML public-private files that are normally issued by SuperOffice to the application vendor.
+   1. The private RSA key is used to sign requests sent to SuperOffice.
+   2. The public RSA key is used by SuperOffice to validate requests sent from the application.
    3. In this example, these are generated in-memory when the application runs, but should be saved to disk when simulating real world scenario.
 
 ## Database Mirror Server - Prepares Request
